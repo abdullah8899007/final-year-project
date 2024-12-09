@@ -1,0 +1,53 @@
+{
+  "tables": [
+    { "id": 1, "tableNumber": 1, "seatingSize": 4, "status": "available" },
+    { "id": 2, "tableNumber": 2, "seatingSize": 2, "status": "reserved" },
+    { "id": 3, "tableNumber": 3, "seatingSize": 2, "status": "reserved" },
+    { "id": 4, "tableNumber": 4, "seatingSize": 2, "status": "reserved" },
+    { "id": 5, "tableNumber": 5, "seatingSize": 4, "status": "available" }
+  ],
+  "reservations": [
+    {
+      "id": 1,
+      "tableId": 2,
+      "customerId": 1,
+      "name": "John Doe",
+      "phone": "123-456-7890",
+      "email": "john@example.com",
+      "address": "123 Main St",
+      "event": "Meeting",
+      "bookingDateTime": "2024-03-06T10:00:00",
+      "status": "Confirmed"
+    },
+    {
+      "id": 2,
+      "tableId": 3,
+      "customerId": 2,
+      "name": "Jane Doe",
+      "phone": "987-654-3210",
+      "email": "jane@example.com",
+      "address": "456 Oak St",
+      "event": "Lunch",
+      "bookingDateTime": "2024-03-07T12:30:00",
+      "status": "Confirmed"
+    }
+  ],
+  "customers": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "phone": "123-456-7890",
+      "email": "john@example.com",
+      "address": "123 Main St",
+      "image": "https://dummyimage.com/50x50/000/fff&text=John"
+    },
+    {
+      "id": 2,
+      "name": "Jane Doe",
+      "phone": "987-654-3210",
+      "email": "jane@example.com",
+      "address": "456 Oak St",
+      "image": "https://dummyimage.com/50x50/000/fff&text=Jane"
+    }
+  ]
+}

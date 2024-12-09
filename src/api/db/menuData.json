@@ -1,0 +1,329 @@
+{
+    "items": [
+      {
+        "id": 1,
+        "name": "Pizza Margherita",
+        "description": "Classic Italian pizza topped with tomato sauce, mozzarella cheese, and fresh basil.",
+        "category": "Pizza",
+        "price": 12.99,
+        "image": "https://example.com/pizza_margherita.jpg",
+        "stock": 20,
+        "isOutOfStock": false
+      },
+      {
+        "id": 2,
+        "name": "Spaghetti Carbonara",
+        "description": "Italian pasta dish made with eggs, cheese, bacon, and black pepper.",
+        "category": "Pasta",
+        "price": 10.99,
+        "image": "https://example.com/spaghetti_carbonara.jpg",
+        "stock": 15,
+        "isOutOfStock": false
+      },
+      {
+        "id": 3,
+        "name": "Caesar Salad",
+        "description": "Classic salad made with romaine lettuce, croutons, Parmesan cheese, and Caesar dressing.",
+        "category": "Salad",
+        "price": 8.99,
+        "image": "https://example.com/caesar_salad.jpg",
+        "stock": 10,
+        "isOutOfStock": false
+      },
+      {
+        "id": 4,
+        "name": "Chicken Parmesan",
+        "description": "Breaded chicken cutlets topped with marinara sauce and melted mozzarella cheese.",
+        "category": "Entree",
+        "price": 14.99,
+        "image": "https://example.com/chicken_parmesan.jpg",
+        "stock": 18,
+        "isOutOfStock": false
+      },
+      {
+        "id": 5,
+        "name": "Hamburger",
+        "description": "Classic beef burger served with lettuce, tomato, onion, and pickles on a bun.",
+        "category": "Burger",
+        "price": 9.99,
+        "image": "https://example.com/hamburger.jpg",
+        "stock": 25,
+        "isOutOfStock": false
+      },
+      {
+        "id": 6,
+        "name": "French Fries",
+        "description": "Crispy deep-fried potato fries seasoned with salt.",
+        "category": "Side Dish",
+        "price": 4.99,
+        "image": "https://example.com/french_fries.jpg",
+        "stock": 30,
+        "isOutOfStock": false
+      },
+      {
+        "id": 7,
+        "name": "Fish and Chips",
+        "description": "Battered and deep-fried fish fillets served with crispy potato chips.",
+        "category": "Seafood",
+        "price": 13.99,
+        "image": "https://example.com/fish_and_chips.jpg",
+        "stock": 20,
+        "isOutOfStock": false
+      },
+      {
+        "id": 8,
+        "name": "Mushroom Risotto",
+        "description": "Creamy Italian rice dish cooked with mushrooms, onions, and Parmesan cheese.",
+        "category": "Risotto",
+        "price": 11.99,
+        "image": "https://example.com/mushroom_risotto.jpg",
+        "stock": 15,
+        "isOutOfStock": false
+      },
+      {
+        "id": 9,
+        "name": "Chicken Caesar Wrap",
+        "description": "Grilled chicken, romaine lettuce, Parmesan cheese, and Caesar dressing wrapped in a tortilla.",
+        "category": "Wrap",
+        "price": 8.49,
+        "image": "https://example.com/chicken_caesar_wrap.jpg",
+        "stock": 22,
+        "isOutOfStock": false
+      },
+      {
+        "id": 10,
+        "name": "BBQ Ribs",
+        "description": "Slow-cooked pork ribs glazed with barbecue sauce.",
+        "category": "BBQ",
+        "price": 16.99,
+        "image": "https://example.com/bbq_ribs.jpg",
+        "stock": 12,
+        "isOutOfStock": false
+      },
+      {
+        "id": 11,
+        "name": "Vegetable Stir-Fry",
+        "description": "Assorted vegetables stir-fried in a savory sauce.",
+        "category": "Stir-Fry",
+        "price": 9.99,
+        "image": "https://example.com/vegetable_stir_fry.jpg",
+        "stock": 20,
+        "isOutOfStock": false
+      },
+      {
+        "id": 12,
+        "name": "Shrimp Scampi",
+        "description": "Garlic butter shrimp served over a bed of pasta.",
+        "category": "Seafood",
+        "price": 15.99,
+        "image": "https://example.com/shrimp_scampi.jpg",
+        "stock": 18,
+        "isOutOfStock": false
+      },
+      {
+        "id": 13,
+        "name": "Cheeseburger",
+        "description": "Beef burger topped with cheddar cheese, lettuce, tomato, and onion on a bun.",
+        "category": "Burger",
+        "price": 10.99,
+        "image": "https://example.com/cheeseburger.jpg",
+        "stock": 25,
+        "isOutOfStock": false
+      },
+      {
+        "id": 14,
+        "name": "Chicken Alfredo",
+        "description": "Creamy pasta dish made with chicken, Alfredo sauce, and Parmesan cheese.",
+        "category": "Pasta",
+        "price": 12.99,
+        "image": "https://example.com/chicken_alfredo.jpg",
+        "stock": 15,
+        "isOutOfStock": false
+      },
+      {
+        "id": 15,
+        "name": "Caprese Salad",
+        "description": "Fresh salad made with tomatoes, mozzarella cheese, basil, and balsamic glaze.",
+        "category": "Salad",
+        "price": 9.49,
+        "image": "https://example.com/caprese_salad.jpg",
+        "stock": 10,
+        "isOutOfStock": false
+      },
+      {
+        "id": 16,
+        "name": "Chicken Teriyaki Bowl",
+        "description": "Grilled chicken served over steamed rice with teriyaki sauce and vegetables.",
+        "category": "Bowl",
+        "price": 11.49,
+        "image": "https://example.com/chicken_teriyaki_bowl.jpg",
+        "stock": 20,
+        "isOutOfStock": false
+      },
+      {
+        "id": 17,
+        "name": "Margherita Panini",
+        "description": "Italian sandwich made with fresh mozzarella, tomatoes, basil, and pesto on ciabatta bread.",
+        "category": "Sandwich",
+        "price": 8.99,
+        "image": "https://example.com/margherita_panini.jpg",
+        "stock": 18,
+        "isOutOfStock": false
+      },
+      {
+        "id": 18,
+        "name": "Tiramisu",
+        "description": "Classic Italian dessert made with layers of coffee-soaked ladyfingers and mascarpone cheese.",
+        "category": "Dessert",
+        "price": 6.99,
+        "image": "https://example.com/tiramisu.jpg",
+        "stock": 20,
+        "isOutOfStock": false
+      },
+      {
+        "id": 19,
+        "name": "Steak Frites",
+        "description": "Grilled steak served with French fries and garlic butter sauce.",
+        "category": "Entree",
+        "price": 19.99,
+        "image": "https://example.com/steak_frites.jpg",
+        "stock": 15,
+        "isOutOfStock": false
+      },
+      {
+        "id": 20,
+        "name": "Vegetarian Pizza",
+        "description": "Pizza topped with assorted vegetables such as bell peppers, mushrooms, onions, and olives.",
+        "category": "Pizza",
+        "price": 13.49,
+        "image": "https://example.com/vegetarian_pizza.jpg",
+        "stock": 17,
+        "isOutOfStock": false
+      },
+      {
+        "id": 21,
+        "name": "Lemon Garlic Shrimp",
+        "description": "Garlic butter shrimp served with lemon wedges and parsley.",
+        "category": "Seafood",
+        "price": 14.49,
+        "image": "https://example.com/lemon_garlic_shrimp.jpg",
+        "stock": 20,
+        "isOutOfStock": false
+      },
+      {
+        "id": 22,
+        "name": "Vegetable Lasagna",
+        "description": "Italian pasta dish made with layers of lasagna noodles, vegetables, marinara sauce, and cheese.",
+        "category": "Pasta",
+        "price": 11.99,
+        "image": "https://example.com/vegetable_lasagna.jpg",
+        "stock": 12,
+        "isOutOfStock": false
+      },
+      {
+        "id": 23,
+        "name": "Chicken Quesadilla",
+        "description": "Grilled chicken and cheese stuffed in a flour tortilla and served with salsa and sour cream.",
+        "category": "Mexican",
+        "price": 9.99,
+        "image": "https://example.com/chicken_quesadilla.jpg",
+        "stock": 25,
+        "isOutOfStock": false
+      },
+      {
+        "id": 24,
+        "name": "Eggplant Parmesan",
+        "description": "Breaded and fried eggplant slices topped with marinara sauce and melted mozzarella cheese.",
+        "category": "Entree",
+        "price": 12.49,
+        "image": "https://example.com/eggplant_parmesan.jpg",
+        "stock": 15,
+        "isOutOfStock": false
+      },
+      {
+        "id": 25,
+        "name": "Margarita Cocktail",
+        "description": "Classic cocktail made with tequila, lime juice, and triple sec.",
+        "category": "Beverage",
+        "price": 7.49,
+        "image": "https://example.com/margarita_cocktail.jpg",
+        "stock": 30,
+        "isOutOfStock": false
+      },
+      {
+        "id": 26,
+        "name": "Chicken Noodle Soup",
+        "description": "Homemade soup made with chicken, vegetables, and egg noodles.",
+        "category": "Soup",
+        "price": 5.99,
+        "image": "https://example.com/chicken_noodle_soup.jpg",
+        "stock": 20,
+        "isOutOfStock": false
+      },
+      {
+        "id": 27,
+        "name": "Chocolate Brownie Sundae",
+        "description": "Warm chocolate brownie topped with vanilla ice cream, chocolate syrup, whipped cream, and a cherry.",
+        "category": "Dessert",
+        "price": 8.99,
+        "image": "https://example.com/chocolate_brownie_sundae.jpg",
+        "stock": 15,
+        "isOutOfStock": false
+      },
+      {
+        "id": 28,
+        "name": "Chicken Fajitas",
+        "description": "Grilled chicken, bell peppers, and onions served with tortillas, salsa, and sour cream.",
+        "category": "Mexican",
+        "price": 13.99,
+        "image": "https://example.com/chicken_fajitas.jpg",
+        "stock": 18,
+        "isOutOfStock": false
+      },
+      {
+        "id": 29,
+        "name": "Cobb Salad",
+        "description": "Salad made with mixed greens, grilled chicken, avocado, bacon, hard-boiled eggs, tomatoes, and blue cheese.",
+        "category": "Salad",
+        "price": 11.99,
+        "image": "https://example.com/cobb_salad.jpg",
+        "stock": 12,
+        "isOutOfStock": false
+      }
+    ],
+    "orders": [
+      {
+        "id": 1,
+        "customerName": "John Doe",
+        "email": "john@example.com",
+        "items": [
+          {
+            "itemId": 1,
+            "quantity": 2
+          },
+          {
+            "itemId": 3,
+            "quantity": 1
+          }
+        ],
+        "totalPrice": 34.97,
+        "orderDate": "2024-02-18T10:30:00",
+        "status": "Completed"
+      },
+      {
+        "id": 2,
+        "customerName": "Jane Smith",
+        "email": "jane@example.com",
+        "items": [
+          {
+            "itemId": 2,
+            "quantity": 1
+          }
+        ],
+        "totalPrice": 10.99,
+        "orderDate": "2024-02-18T12:15:00",
+        "status": "Pending"
+      }
+    ]
+  }
+  

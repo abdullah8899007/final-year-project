@@ -1,0 +1,8 @@
+export const dealsdata = [
+    { id: 1, name: "The Japanese Oichii Burger", price: 100, category: "Burger", description: "The Japanese Oichii Burger", quantity: 1, image: "https://www.foodandwine.com/thmb/DI29Houjc_ccAtFKly0BbVsusHc=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/crispy-comte-cheesburgers-FT-RECIPE0921-6166c6552b7148e8a8561f7765ddf20b.jpg" },
+    { id: 2, name: "Festive special burger", price: 120, category: "Burger", description: "Creamy Cheesy Chicken Burger", quantity: 1, image: "https://www.recipetineats.com/wp-content/uploads/2023/09/Crispy-fried-chicken-burgers_5.jpg" },
+    { id: 3, name: "Fatboy Combo Burger", price: 150, category: "Burger", description: "Traditional Margherita Burger", quantity: 1, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQa0TMm5x-dsTun22a19YpBL4sMl5XO6BNtw&usqp=CAU" },
+    { id: 4, name: "Sizzling Beef Burger", price: 80, category: "Burger", description: "Juicy Sizzling Beef Burger", quantity: 1, image: "https://media.istockphoto.com/id/1403973419/photo/table-top-of-food-spread-on-table.jpg?s=1024x1024&w=is&k=20&c=MUzQiekBfW_aJnHk-Q0oGwyJyz6K1XUwq-_UZCf1tMM=" },
+    { id: 5, name: "Crispy Fried Chicken", price: 100, category: "Burger", description: "Golden Crispy Fried Burger", quantity: 1, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy5kLzOESd0OJusVgoupkQtDMODrvpoSvLpA&usqp=CAU" },
+]
+    export default dealsdata;
