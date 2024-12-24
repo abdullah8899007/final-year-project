@@ -13,7 +13,10 @@ export interface SalesReportItem {
   image: string;
   stock: number; 
 }
-
+export interface MonthlySales {
+    month: string;
+    total_sales: number;
+}
 interface SalesReportState {
   items: SalesReportItem[];
   selectedItem: SalesReportItem | null;

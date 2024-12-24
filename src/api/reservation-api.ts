@@ -33,3 +33,13 @@ export const fetchReservationsApi = async () => {
     throw new Error('Failed to fetch reservations');
   }
 };
+
+export const fetchSalesApi  = async () => {
+  try {
+    const response = await axios.get(API_URLS +'/sales/main-balance/',axiosConfig);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch reservations');
+  }
+};
+

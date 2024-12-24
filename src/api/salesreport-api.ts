@@ -37,3 +37,77 @@ export const fetchMonthlyItems = async (): Promise<SalesReportItem[]> => {
     throw new Error('Failed to fetch sales Items ');
   }
 };
+type MonthlySalesResponse = {
+  data: number[];
+};
+export const fetchMonthlySales = async (): Promise<number[]> => {
+  try {
+    const response = await axios.get<MonthlySalesResponse>(
+      `${API_URLS}/sales/monthly-sales/`,
+      {
+        headers: {
+          'ngrok-skip-browser-warning': 'true',
+        },
+      }
+    );
+    return response.data.data; 
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching monthly sales:', error.response?.data || error.message);
+    } else {
+      console.error('Unexpected error:', error);
+    }
+    throw new Error('Failed to fetch monthly sales');
+  }
+};
+export const fetchWeeklySales = async (): Promise<number[]> => {
+  try {
+    const response = await axios.get<MonthlySalesResponse>(
+      `${API_URLS}/sales/weekly-sales/`,
+      {
+        headers: {
+          'ngrok-skip-browser-warning': 'true',
+        },
+      }
+    );
+    return response.data.data; 
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching monthly sales:', error.response?.data || error.message);
+    } else {
+      console.error('Unexpected error:', error);
+    }
+    throw new Error('Failed to fetch monthly sales');
+  }
+};
+interface Customer {
+  id: number;
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+  data: number[];
+
+}
+
+export const fetchUserData = async (): Promise<number[]> => {
+  try {
+    const response = await axios.get<Customer>(
+      `${API_URLS}/customers/customer/`,
+      {
+        headers: {
+          'ngrok-skip-browser-warning': 'true',
+        },
+      }
+    );
+    return response.data.data; 
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching monthly sales:', error.response?.data || error.message);
+    } else {
+      console.error('Unexpected error:', error);
+    }
+    throw new Error('Failed to fetch monthly sales');
+  }
+};
+

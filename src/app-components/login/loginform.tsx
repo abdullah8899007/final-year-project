@@ -85,7 +85,7 @@ const Loginform = ({ signup }) => {
               <input
                 id="password"
                 {...register("password")}
-                type="text"
+                type="password"
                 className="bg-gray-200 border border-gray-700 w-96 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline sign-up-input"
               />
             </div>

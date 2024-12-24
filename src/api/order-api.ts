@@ -65,5 +65,3 @@ export const deleteOrderAPI = async (orderId: number): Promise<void> => {
     throw new Error('Failed to delete Order');
   }
 };
-
- 

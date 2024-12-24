@@ -148,8 +148,8 @@ const Signup = ({ signup }: { signup?: boolean }) => {
           <div className="signIn-btn-container">
             <button
               type="submit"
-              className="hover:bg-blue-700 font-bold py-3 px-8 rounded-full focus:outline-none bg-orange-600 text-white"
-            >
+              className="hover:bg-orange-800 bg-orange-500 text-white font-bold py-3 px-8 rounded-full focus:outline-none transition duration-200"
+              >
               {signup ? "Signup" : "Login"}
             </button>
             <span className="text-for-logn ml-10">Or sign in with other accounts?</span>
