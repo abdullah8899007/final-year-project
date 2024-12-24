@@ -2,7 +2,6 @@ import React from "react";
 import Logo from "../../../app/common-components/Common-Login-Comp/logo";
 import RightElipse2 from "../rightElipse2";
 import Loginform from "../loginform";
-// import "../Login.css";
 
 const Login = () => {
   return (
@@ -22,7 +21,3 @@ const Login = () => {
   );
 };
 export default Login;
-
-
-
-

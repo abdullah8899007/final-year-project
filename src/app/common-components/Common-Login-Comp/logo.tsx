@@ -9,7 +9,7 @@ const Logo: React.FC = () => {
         <Image src={logoImage} alt="Logo" className="logo-image" />
       </div>
       <div className="title-wrapper-logg">
-        <h1 className="logo-titlee">Sign In</h1>
+        <h1 className="logo-titlee">Sign Up</h1>
         <span className="logo-title-text">Sign in to stay connected. </span>
       </div>
     </>

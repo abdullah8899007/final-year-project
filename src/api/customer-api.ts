@@ -81,3 +81,17 @@ export const deleteCustomerAPI = async (CustomerId: number): Promise<void> => {
   }
 };
 
+export const SignUpApi = async (Customer: Omit<LoginCustomer, 'id'>): Promise<LoginCustomer> => {
+  try {
+    const response = await axios.post<{ data: LoginCustomer }>(
+      `${API_URLS}/accounts/register/`, 
+      Customer, 
+      axiosConfig
+    );
+    console.log('SignUp customer Info Response:', response.data);
+    return response.data.data;
+  } catch (error: any) {
+    console.error('Error signing up customer:', error?.response?.data || error.message);
+    throw new Error(error?.response?.data?.message || 'Failed to sign up customer');
+  }
+};
