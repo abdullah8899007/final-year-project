@@ -111,3 +111,44 @@ export const fetchUserData = async (): Promise<number[]> => {
   }
 };
 
+export const fetchLastTransactions = async (): Promise<any[]> => {
+  try {
+    const response = await axios.get<Customer>(
+      `${API_URLS}/orders/latest_orderdetail/`,
+      {
+        headers: {
+          'ngrok-skip-browser-warning': 'true',
+        },
+      }
+    );
+    return response.data.data; 
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching monthly sales:', error.response?.data || error.message);
+    } else {
+      console.error('Unexpected error:', error);
+    }
+    throw new Error('Failed to fetch monthly sales');
+  }
+};
+
+export const fetchInvoiceData = async (): Promise<any[]> => {
+  try {
+    const response = await axios.get<Customer>(
+      `${API_URLS}/sales/invoices/`,
+      {
+        headers: {
+          'ngrok-skip-browser-warning': 'true',
+        },
+      }
+    );
+    return response.data.data; 
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching monthly sales:', error.response?.data || error.message);
+    } else {
+      console.error('Unexpected error:', error);
+    }
+    throw new Error('Failed to fetch monthly sales');
+  }
+};

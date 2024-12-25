@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
                     </div> */}
                   </div>
                 </div>
-                <Specialties className="md:w-auto specialties" />
+                {/* <Specialties className="md:w-auto specialties" /> */}
                 <UserList className="w-full md:w-auto user-list" />
               </div>
 
@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
                 <LastTransactions className="w-full md:w-auto last-transactions" />
                 <EarningCategories className="w-full md:w-auto earning-categories-graph" />
 
-                <TopMenuItems className="w-full md:w-auto top-menu-items" />
+                {/* <TopMenuItems className="w-full md:w-auto top-menu-items" /> */}
               </div>
             
             </div>

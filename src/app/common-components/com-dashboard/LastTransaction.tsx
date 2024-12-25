@@ -1,73 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import SausagePizzaImage from '@/assets/dashboardAssets/pizza1.svg';
-import PepperoniPizzaImage from '@/assets/dashboardAssets/pizza2.svg';
-import VeggiePizzaImage from '@/assets/dashboardAssets/pizza3.svg';
-import BBQChickenPizzaImage from '@/assets/dashboardAssets/pizza4.svg';
-import MeatPizzaImage from '@/assets/dashboardAssets/pizza6.svg';
-import SupremePizzaImage from '@/assets/dashboardAssets/pizza7.svg';
+import { fetchLastTransactions } from "../../../api/salesreport-api";
 
 interface Transaction {
   id: string;
   date: string;
   foodItem: string;
   price: number;
-  image: any;
+  image: string;
 }
 
 interface LastTransactionsProps {
   className: string;
 }
 
-const TRANSACTIONS: Transaction[] = [
-  {
-    id: "1",
-    date: "2024-02-17",
-    foodItem: "Sausage Pizza",
-    price: -115,
-    image: SausagePizzaImage,
-  },
-  {
-    id: "2",
-    date: "2024-02-16",
-    foodItem: "Pepperoni Pizza",
-    price: -120,
-    image: PepperoniPizzaImage,
-  },
-  {
-    id: "3",
-    date: "2024-02-15",
-    foodItem: "Veggie Pizza",
-    price: -140,
-    image: VeggiePizzaImage,
-  },
-  {
-    id: "4",
-    date: "2024-02-14",
-    foodItem: "BBQ Pizza",
-    price: -150,
-    image: BBQChickenPizzaImage,
-  },
-  {
-    id: "5",
-    date: "2024-02-14",
-    foodItem: "Meat Pizza",
-    price: -130,
-    image: MeatPizzaImage,
-  },
-  {
-    id: "6",
-    date: "2024-02-14",
-    foodItem: "Supreme Pizza",
-    price: -130,
-    image: SupremePizzaImage,
-  },
-];
-
-const LastTransactions: React.FC<LastTransactionsProps> = ({ className = '' }) => {
+const LastTransactions: React.FC<LastTransactionsProps> = ({
+  className = "",
+}) => {
+  const [transactionsData, setTransactionsData] = useState<Transaction[]>([]);
   const classNames = `rounded-lg shadow-lg bg-white last-transactions ${
     className || ""
   }`;
+
+  const getData = async () => {
+    try {
+      const response = await fetchLastTransactions();
+
+      if (response?.items?.length > 0) {
+        const formattedData = response?.items.map(
+          (item: any, index: number) => ({
+            id: (index + 1).toString(),
+            date: new Date(response?.created_at).toLocaleDateString(),
+            foodItem: item.name,
+            price: item.price,
+            image: item.image,
+          })
+        );
+        setTransactionsData(formattedData);
+      } else {
+        console.warn("No items found in API response");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="mt-4">
@@ -77,34 +57,34 @@ const LastTransactions: React.FC<LastTransactionsProps> = ({ className = '' }) =
           <span className="absolute top-10 right-3 w-full h-0.5 bg-[#DDCBBA]"></span>
         </h2>
         <div>
-          {TRANSACTIONS.map((transaction) => (
-            // Check if all required fields exist and are valid//
-            transaction.id && transaction.date && transaction.foodItem && transaction.price && transaction.image &&
-            <div
-              key={transaction.id}
-              className="flex items-center justify-between mb-4"
-            >
-              <div className="flex items-center ml-4 mt-2">
-                <div className="relative w-10 h-10 rounded-lg mr-4 overflow-hidden">
-                  <Image
-                    src={transaction.image}
-                    alt={transaction.foodItem}
-                    layout="fill"
-                    objectFit="cover"
-                  />
+          {transactionsData && transactionsData.length > 0 ? (
+            transactionsData.map((transaction) => (
+              <div
+                key={transaction.id}
+                className="flex items-center justify-between mb-4"
+              >
+                <div className="flex items-center ml-4 mt-2">
+                  <div className="relative w-10 h-10 rounded-lg mr-4 overflow-hidden">
+                    <div
+                      className="w-4 h-4 bg-orange-500 rounded-full mr-4 mt-2"
+                      title={transaction.foodItem}
+                    ></div>
+                  </div>
+                  <div>
+                    <p className="text-base">{transaction.foodItem}</p>
+                    <p className="text-sm">{transaction.date}</p>
+                  </div>
                 </div>
                 <div>
-                  <p className="text-base">{transaction.foodItem}</p>
-                  <p className="text-sm">{transaction.date}</p>
+                  <p className="text-base relative mr-4">
+                    Rs.{Math.abs(transaction.price)}
+                  </p>
                 </div>
               </div>
-              <div>
-                <p className="text-base relative mr-4">
-                   Rs.{Math.abs(transaction.price)}
-                </p>
-              </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No transactions found</p> // Fallback if no data
+          )}
         </div>
       </div>
     </div>
