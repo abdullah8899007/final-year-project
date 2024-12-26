@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiFillPlusSquare } from "react-icons/ai";
 import ImageUploader from "@/app/common-components/ImageUploader";
 import { AppDispatch } from "@/store/root-store";
-import { MenuItem,createMenuItemAsync} from "@/store/slice/menuSlice";
+import { MenuItem, createMenuItemAsync } from "@/store/slice/menuSlice";
 import { RxCross2 } from "react-icons/rx";
-import {selectAllCategories,} from "@/store/slice/categoriesSlice";
+import { selectAllCategories } from "@/store/slice/categoriesSlice";
 import { RootState } from "@/store/root-store";
 import { useDispatch, useSelector } from "react-redux";
+
 const AddModal: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,14 +20,17 @@ const AddModal: React.FC = () => {
     image: "",
   });
 
+  // Fetch categories from Redux
   const categories = useSelector((state: RootState) =>
     selectAllCategories(state)
   );
 
+  // Close Modal
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
+  // Handle Input Changes
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -39,11 +43,11 @@ const AddModal: React.FC = () => {
     }));
   };
 
+  // Handle Form Submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
 
-    const newitem: Omit<MenuItem ,"id">= {
+    const newitem: Omit<MenuItem, "id"> = {
       name: formData.name,
       description: formData.description,
       price: parseFloat(formData.price),
@@ -51,8 +55,9 @@ const AddModal: React.FC = () => {
       stock: formData.stock,
       image: formData.image,
     };
+
     dispatch(createMenuItemAsync(newitem));
-    console.log("api",newitem)
+
     setFormData({
       name: "",
       description: "",
@@ -61,13 +66,16 @@ const AddModal: React.FC = () => {
       stock: 0,
       image: "",
     });
+
     closeModal();
   };
 
+  // Toggle Modal
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  // Handle Image Upload
   const handleImageChange = (imageUrl: any) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -88,24 +96,22 @@ const AddModal: React.FC = () => {
 
       {isModalOpen && (
         <div className="fixed inset-0 p-4 flex flex-wrap justify-center items-center w-full h-full z-[1000] before:fixed before:inset-0 before:w-full before:h-full before:bg-[rgba(0,0,0,0.5)] overflow-auto font-[sans-serif]">
-          <div className=" w-[70%] bg-white shadow-lg rounded-lg p-6 relative">
+          <div className="w-[70%] bg-white shadow-lg rounded-lg p-6 relative">
             <div className="flex justify-between flex-row">
-              <h1 className="font-exo2 text-2xl font-semibold  text-[#ea6a12]">
+              <h1 className="font-exo2 text-2xl font-semibold text-[#ea6a12]">
                 Add Menu Items{" "}
               </h1>
-
               <RxCross2
                 className="text-2xl text-[#ea6a12]"
                 onClick={closeModal}
               />
-
             </div>
 
             <form
-              className="w flex flex-row  bg-white shadow-lg rounded-lg p-6  "
+              className="w flex flex-row bg-white shadow-lg rounded-lg p-6"
               onSubmit={handleSubmit}
             >
-              <div className="w-2/3 ml-2 ">
+              <div className="w-2/3 ml-2">
                 <div className="space-y-4">
                   <div>
                     <label
@@ -127,7 +133,7 @@ const AddModal: React.FC = () => {
                   <div>
                     <label
                       htmlFor="description"
-                      className="block text-sm font-medium text-gray-700 "
+                      className="block text-sm font-medium text-gray-700"
                     >
                       Description
                     </label>
@@ -174,37 +180,37 @@ const AddModal: React.FC = () => {
                       required
                     >
                       <option value="">Select Category</option>
-                      {categories.map((category) => (
-                        <option
-                          key={category.id}
-                          value={category.id}
-                        >
-                          {category.name}
-                        </option>
-                      ))}
+                      {Array.isArray(categories) && categories.length > 0 ? (
+                        categories.map((category) => (
+                          <option key={category.id} value={category.id}>
+                            {category.name}
+                          </option>
+                        ))
+                      ) : (
+                        <option value="">No categories available</option>
+                      )}
                     </select>
                   </div>
                   <div>
                     <label
-                      htmlFor="quantity"
+                      htmlFor="stock"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Quantity
+                      Stock
                     </label>
                     <input
-                    title="stock"
                       type="number"
                       id="stock"
                       name="stock"
                       value={formData.stock}
                       onChange={handleChange}
-                      className="mt-1 p-2 border border-gray-300 text-sm font-medium font-exo2  rounded-md w-full focus:outline-none"
+                      className="mt-1 p-2 border border-gray-300 text-sm font-medium font-exo2 rounded-md w-full focus:outline-none"
                       required
                     />
                   </div>
                   <button
                     type="submit"
-                    className="bg-[#ea6a12] text-white  py-2 px-7 rounded-md hover:bg-[#cea488]"
+                    className="bg-[#ea6a12] text-white py-2 px-7 rounded-md hover:bg-[#cea488]"
                   >
                     Save
                   </button>

@@ -1,4 +1,4 @@
-import waletlogo from "../../../../public/Walletimage/Vector.png"
+import waletlogo from "../../../../public/WalletImage/Vector.png"
 import Image from "next/image";
 import { FaFile } from "react-icons/fa";
 import { FaArrowUp } from "react-icons/fa";
