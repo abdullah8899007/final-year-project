@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchUserData } from "../../../api/salesreport-api";
-import Image from "next/image";
+import { fetchUserData } from "../../../api/salesreport-api"; // Adjust the path to your API function
 
 interface UserListProps {
   className?: string;
@@ -8,18 +7,22 @@ interface UserListProps {
 
 const UserList: React.FC<UserListProps> = ({ className }) => {
   const [userData, setUserData] = useState<any[]>([]);
-
+ console.log("userdata",userData)
   const getData = async () => {
     try {
       const response = await fetchUserData();
-      console.log("response",response[0])
-      if (response) {
-        setUserData(response); // Set the fetched data
+      console.log("Response from API:", response);
+
+      // Validate the response is an array
+      if (response?.results && Array.isArray(response.results)) {
+        setUserData(response.results);
       } else {
-        console.error("Failed to fetch data");
+        console.error("Invalid data format: Expected an array");
+        setUserData([]); // Set an empty array to avoid rendering issues
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      setUserData([]); // Set an empty array in case of an error
     }
   };
 
@@ -27,7 +30,8 @@ const UserList: React.FC<UserListProps> = ({ className }) => {
     getData(); // Fetch data on component mount
   }, []);
 
-  console.log("userData",userData)
+  console.log("Processed userData:", userData);
+
   return (
     <div className={`rounded-lg shadow-lg bg-white user-list p-5 mt-8 ${className}`}>
       <h2 className="text-lg font-semibold mb-3 left-3">User List</h2>
@@ -42,19 +46,27 @@ const UserList: React.FC<UserListProps> = ({ className }) => {
             </tr>
           </thead>
           <tbody>
-            {/* Map over userData array instead of usersData */}
-            {userData.map((user) => (
-              <tr key={user.id}>
-                <td className="flex items-center py-2 px-1">
-                  <div className="ml-2">
-                    <h1>{user.name}</h1>
-                  </div>
+            {/* Check if userData is an array and has data */}
+            {Array.isArray(userData) && userData.length > 0 ? (
+              userData.map((user) => (
+                <tr key={user.id}>
+                  <td className="flex items-center py-2 px-1">
+                    <div className="ml-2">
+                      <h1>{user.name || "N/A"}</h1> {/* Handle missing name */}
+                    </div>
+                  </td>
+                  <td className="py-2 px-4">{user.phone || "N/A"}</td> {/* Handle missing phone */}
+                  <td className="py-2 px-4">{user.email || "N/A"}</td> {/* Handle missing email */}
+                  <td className="py-2 px-4">{user.address || "N/A"}</td> {/* Handle missing address */}
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="text-center py-4">
+                  No user data available.
                 </td>
-                <td className="py-2 px-4">{user.phone}</td> {/* Use phone from the backend response */}
-                <td className="py-2 px-4">{user.email}</td>
-                <td className="py-2 px-4">{user.address}</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

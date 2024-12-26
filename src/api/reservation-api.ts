@@ -43,3 +43,11 @@ export const fetchSalesApi  = async () => {
   }
 };
 
+export const fetchCategoryApi  = async () => {
+  try {
+    const response = await axios.get(API_URLS +'/orders/analytics/categories-sales/',axiosConfig);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch reservations');
+  }
+};

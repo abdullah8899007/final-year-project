@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomPieChart from "./CustomPieChart";
+import { fetchCategoryApi } from "@/api/reservation-api";
 
 interface EarningCategoriesProps {
   className: string;
@@ -7,6 +8,30 @@ interface EarningCategoriesProps {
 
 const EarningCategories: React.FC<EarningCategoriesProps> = ({ className = '' }) => {
   const classNames = `rounded-lg shadow-lg bg-white earning-categories-graph ${className}`;
+    const [userData, setUserData] = useState<any[]>([]);
+  
+    console.log("userData",userData)
+const getData = async () => {
+    try {
+      const response = await fetchCategoryApi();
+      console.log("Response from API:", response);
+
+      // Validate the response is an array
+      if (response?.data && Array.isArray(response.data)) {
+        setUserData(response.data);
+      } else {
+        console.error("Invalid data format: Expected an array");
+        setUserData([]); // Set an empty array to avoid rendering issues
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setUserData([]); // Set an empty array in case of an error
+    }
+  };
+
+  useEffect(() => {
+    getData(); // Fetch data on component mount
+  }, []);
 
   return (
     <div className=" ">
@@ -16,13 +41,12 @@ const EarningCategories: React.FC<EarningCategoriesProps> = ({ className = '' })
           Heist Earnings Categories
         </h2>
         <div className="mb-14">
-          <CustomPieChart
-            data={[
-              { name: "Pizza", value: 335 },
-              { name: "Burger", value: 234 },
-              { name: "VegPizza", value: 234 },
-            ]}
-          />
+        <CustomPieChart
+  data={userData.map((item) => ({
+    name: item.category_name,
+    value: item.percentage,
+  }))}
+/>
         </div>
       </div>
     </div>
