@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../layout";
 import ShoppingIcon from "./menu-com/shoppingIcon";
 import ItemCard from "../../pages/menu/menu-com/ItemCard";
 import AddModal from "./menu-com/addModal";
 import MenuComparison from "./menu-com/menuComparison";
- 
+import CartModal from "./menu-com/cartModal";
+
 const Menuitem: React.FC = () => {
+  const [data, setData] = useState<any[]>([]);
+  const [selectedItem, setSelectedItem] = useState<any>([]);
+  console.log("selectedItem", selectedItem);
+
   return (
     <Layout>
       {/* Left heading and button section */}
@@ -18,15 +23,25 @@ const Menuitem: React.FC = () => {
         </div>
         <div className="flex items-center space-x-4 mt-4 md:mt-0">
           {/* Cart icon and Cart detail show in this componenets  */}
-          <ShoppingIcon />
+          {/* <ShoppingIcon /> */}
+          <CartModal
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+          />
+
           <AddModal />
         </div>
       </div>
       {/* Main content area */}
-      <div className="grid grid-rows mt-4  gap-3   ">
+      <div className="griLunchLunchd grid-rows mt-4  gap-3   ">
         {/* Menu catalog */}
         <div className="bg-[#FBF9F0]  rounded-md  mt-5">
-          <ItemCard />
+          <ItemCard
+            data={data}
+            setData={setData}
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+          />
         </div>
         {/* Menu */}
         <div className="bg-white p-4  h-[95%] border rounded-lg shadow-md my-3 mx-3 ">

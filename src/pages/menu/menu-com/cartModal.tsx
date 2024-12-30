@@ -15,13 +15,23 @@ interface CartItem {
   price: number;
   image: string;
 }
-const CartModal: React.FC = () => {
+interface CartModalProps {
+  selectedItem: any;
+  setSelectedItem: any;
+}
+const CartModal: React.FC<CartModalProps> = ({
+  selectedItem,
+  setSelectedItem,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [discount, setDiscount] = useState(0);
   const dispatch: AppDispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const Customer = useSelector((state: RootState) => state.customer.customers);
   const [invoiceId, setInvoiceId] = useState<number>(0);
+  const [itemQuantities, setItemQuantities] = useState<Record<string, number>>(
+    {}
+  );
 
   const [userData, setUserData] = useState({
     name: "",
@@ -57,20 +67,30 @@ const CartModal: React.FC = () => {
       }));
     }
   };
-
+  console.log("selectedItem>>>>>>>>>>>>>>>>>>>>>>>>.", selectedItem);
   const calculateTotal = () => {
     return cartItems.reduce(
       (totalPrice, item) => totalPrice + item.stock * item.price,
       0
     );
   };
+  //   setItemQuantities((prevQuantities) => {
+  //     const { [id]: _, ...remainingQuantities } = prevQuantities;
+  //     return remainingQuantities;
+  //   });
+  // };
 
-  const handleUpdateQuantity = (itemId: number, newstock: number) => {
-    dispatch(updateQuantity({ id: itemId, stock: newstock }));
+  const handleUpdateQuantity = (id: any, newQuantity: number) => {
+    // Update the quantity for the specific item
+    setItemQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [id]: newQuantity,
+    }));
   };
-
-  const handleDelete = (itemId: number) => {
-    dispatch(removeFromCart({ id: itemId }));
+  const handleDelete = (id: any) => {
+    setSelectedItem((prevItems: any[]) =>
+      prevItems.filter((item: { id: any }) => item.id !== id)
+    );
   };
 
   const CartItem = useSelector((state: RootState) => state.cart.items);
@@ -118,7 +138,6 @@ const CartModal: React.FC = () => {
               price: item.price,
               status: "pending",
             })),
-           
           };
 
           dispatch(createInvoiceAsync(newInvoice)).then((orderAction: any) => {
@@ -296,68 +315,74 @@ const CartModal: React.FC = () => {
                               </th>
                             </tr>
                           </thead>
+
                           <tbody>
-                            {cartItems.map((item) => (
-                              <tr key={item.id}>
-                                <td className="py-4 ">
-                                  <picture className="items-center  ">
-                                    <img
-                                      src={item.image}
-                                      alt="Food"
-                                      className="object-cover rounded-full w-16 h-16  "
+                            {selectedItem?.map(
+                              (
+                                item: {
+                                  id: React.Key | null | undefined;
+                                  name: string;
+                                  price: number;
+                                },
+                                index: any
+                              ) => (
+                                <tr key={item.id}>
+                                  {" "}
+                                  {/* Unique key for each item */}
+                                  <td>
+                                    <p>
+                                      {item.name
+                                        .split(" ")
+                                        .slice(0, 2)
+                                        .join(" ")}
+                                    </p>
+                                  </td>
+                                  <td>Rs: {item.price.toFixed(2)}</td>
+                                  <td>
+                                    <div className="flex">
+                                      <button
+                                        onClick={() =>
+                                          handleUpdateQuantity(
+                                            item.id,
+                                            (itemQuantities[item.id] || 1) - 1
+                                          )
+                                        }
+                                        className="w-6 h-6 text-md flex items-center justify-center text-[#ffffff] border bg-[#ea6a12] rounded-full"
+                                      >
+                                        -
+                                      </button>
+                                      <span>
+                                        {itemQuantities[item.id] || 1}
+                                      </span>
+                                      <button
+                                        onClick={() =>
+                                          handleUpdateQuantity(
+                                            item.id,
+                                            (itemQuantities[item.id] || 1) + 1
+                                          )
+                                        }
+                                        className="w-6 h-6 text-md flex items-center justify-center text-[#ffffff] border bg-[#ea6a12] rounded-full"
+                                      >
+                                        +
+                                      </button>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    Rs:{" "}
+                                    {(
+                                      item.price *
+                                      (itemQuantities[item.id] || 1)
+                                    ).toFixed(2)}
+                                  </td>
+                                  <td>
+                                    <MdDelete
+                                      className="text-2xl cursor-pointer shrink-0 fill-[#ea6a12] hover:fill-red-500"
+                                      onClick={() => handleDelete(item.id)} // Pass item id to handleDelete
                                     />
-                                  </picture>
-                                </td>
-                                <td className="py-4 ">
-                                  <p className="text-sm text-black">
-                                    {item.name.split(" ").slice(0, 2).join(" ")}
-                                  </p>
-                                  <p className="text-gray-400 text-xs mt-1">
-                                    Quantity: {item.stock}
-                                  </p>
-                                </td>
-                                <td className="py-4 ">
-                                  <div className="flex ">
-                                    <button
-                                      title="minus"
-                                      onClick={() =>
-                                        handleUpdateQuantity(
-                                          item.id,
-                                          item.stock - 1
-                                        )
-                                      }
-                                      className="w-6 h-6 text-md flex items-center justify-center text-[#ffffff] border bg-[#ea6a12] rounded-full"
-                                    >
-                                      -
-                                    </button>
-                                    <span className="text-center w-8">
-                                      {item.stock}
-                                    </span>
-                                    <button
-                                      title="plus"
-                                      onClick={() =>
-                                        handleUpdateQuantity(
-                                          item.id,
-                                          item.stock + 1
-                                        )
-                                      }
-                                      className="w-6 h-6 flex text-md items-center justify-center text-[#ffffff] border bg-[#ea6a12] rounded-full"
-                                    >
-                                      +
-                                    </button>
-                                  </div>
-                                </td>
-                                <td className="py-4 ">
-                                  Rs: {(item.price * item.stock).toFixed(2)}
-                                </td>
-                                <td className="py-4  ">
-                                  <MdDelete
-                                    className="text-2xl cursor-pointer shrink-0 fill-[#ea6a12] hover:fill-red-500  "
-                                    onClick={() => handleDelete(item.id)}
-                                  />
-                                </td>
-                              </tr>
-                            ))}
+                                  </td>
+                                </tr>
+                              )
+                            )}
                           </tbody>
                         </table>
                       </div>
