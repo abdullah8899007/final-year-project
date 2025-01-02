@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiFillPlusSquare } from "react-icons/ai";
 import ImageUploader from "@/app/common-components/ImageUploader";
 import { AppDispatch } from "@/store/root-store";
@@ -7,6 +7,9 @@ import { RxCross2 } from "react-icons/rx";
 import { selectAllCategories } from "@/store/slice/categoriesSlice";
 import { RootState } from "@/store/root-store";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchAllCategories } from "../../../api/salesreport-api";
+import axios from "axios";
+import { API_URLS } from "@/utils/api-urls";
 
 const AddModal: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -17,8 +20,27 @@ const AddModal: React.FC = () => {
     price: "",
     categoryId: "",
     stock: 0,
-    image: "",
+    image: "ccc",
   });
+  const [mainCategories, setMainCategories] = useState<any[]>([]);
+  const getData = async () => {
+    try {
+      const response = await fetchAllCategories(); // Assume fetchAllCategories handles the API call
+      if (response) {
+        setMainCategories(response.results);
+      } else {
+        setMainCategories([]);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setMainCategories([]);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+  console.log("mainCategories", mainCategories);
 
   // Fetch categories from Redux
   const categories = useSelector((state: RootState) =>
@@ -44,10 +66,10 @@ const AddModal: React.FC = () => {
   };
 
   // Handle Form Submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const newitem: Omit<MenuItem, "id"> = {
+    const payload = {
       name: formData.name,
       description: formData.description,
       price: parseFloat(formData.price),
@@ -56,18 +78,25 @@ const AddModal: React.FC = () => {
       image: formData.image,
     };
 
-    dispatch(createMenuItemAsync(newitem));
-
-    setFormData({
-      name: "",
-      description: "",
-      price: "",
-      categoryId: "",
-      stock: 0,
-      image: "",
-    });
-
-    closeModal();
+    try {
+      const response = await axios.post(`${API_URLS}/menu/items/`, payload); // Replace with your API endpoint
+      if (response.status === 201) {
+        console.log("Menu item created successfully:", response.data);
+        setFormData({
+          name: "",
+          description: "",
+          price: "",
+          categoryId: "",
+          stock: 0,
+          image: "ccc",
+        });
+        closeModal();
+      } else {
+        console.error("Unexpected response:", response);
+      }
+    } catch (error) {
+      console.error("Error creating menu item:", error);
+    }
   };
 
   // Toggle Modal
@@ -180,8 +209,9 @@ const AddModal: React.FC = () => {
                       required
                     >
                       <option value="">Select Category</option>
-                      {Array.isArray(categories) && categories.length > 0 ? (
-                        categories.map((category) => (
+                      {Array.isArray(mainCategories) &&
+                      mainCategories.length > 0 ? (
+                        mainCategories.map((category) => (
                           <option key={category.id} value={category.id}>
                             {category.name}
                           </option>
@@ -199,8 +229,6 @@ const AddModal: React.FC = () => {
                       Stock
                     </label>
                     <input
-                      type="number"
-                      id="stock"
                       name="stock"
                       value={formData.stock}
                       onChange={handleChange}
@@ -216,12 +244,11 @@ const AddModal: React.FC = () => {
                   </button>
                 </div>
               </div>
-              <div className="w-1/2 pl-4">
-                {/* Right side image uploader with preview */}
+              {/* <div className="w-1/2 pl-4">
                 <div className="flex flex-col ml-10 items-center justify-center h-full">
                   <ImageUploader onChange={handleImageChange} />
                 </div>
-              </div>
+              </div> */}
             </form>
           </div>
         </div>

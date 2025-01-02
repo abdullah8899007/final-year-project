@@ -215,3 +215,14 @@ export const fetchOrderDetails = async (): Promise<any[]> => {
   }
 };
 
+export const deleteItem = async (itemId: number) => {
+  try {
+    const response = await fetch(`${API_URLS}/menu/items/${itemId}`, {
+      method: "DELETE",
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("Error in deleteItem:", error);
+    return null;
+  }
+};

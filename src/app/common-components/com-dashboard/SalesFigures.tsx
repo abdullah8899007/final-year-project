@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Chart } from "primereact/chart";
 import { fetchMonthlySales } from "../../../api/salesreport-api";
 
+
 interface ProductSalesProps {
   className?: string;
 }

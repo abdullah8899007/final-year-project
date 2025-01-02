@@ -118,6 +118,7 @@ import { CategoryItems } from "@/store/slice/categoriesSlice";
 import { RxCross2 } from "react-icons/rx";
 import { createCategoryAsync } from "@/store/slice/categoriesSlice";
 import axios from "axios"; // Import axios
+import { API_URLS } from "@/utils/api-urls";
 
 const AddModal = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -155,7 +156,7 @@ const AddModal = () => {
 
     // Send the data using axios
     try {
-      const response = await axios.post("https://d44a-119-157-163-247.ngrok-free.app/menu/categories/", formDataToSend, {
+      const response = await axios.post(`${API_URLS}/menu/categories/`, formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data", // Set the correct content type
         },

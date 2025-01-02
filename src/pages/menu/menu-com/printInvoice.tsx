@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/root-store";
 import { RxCross2 } from "react-icons/rx";
 import { createInvoiceAsync, Invoice } from "@/store/slice/invoiceSlice";
+import axios from "axios";
+import { API_URLS } from "@/utils/api-urls";
 interface CartItem {
   id: number;
   name: string;
@@ -31,6 +33,7 @@ const PrintInvoice = ({
   invoiceId,
   customerData,
   cartItems,
+  invoiceNumber,
   calculateTotal,
   total,
 }: PrintInvoiceProps) => {
@@ -39,9 +42,11 @@ const PrintInvoice = ({
   const dispatch: AppDispatch = useDispatch();
   const currentDateRef = useRef<string>("");
   const SelectOrder = useSelector((state: RootState) => state.order.orders);
+  const [message,setMessage] = useState(false)
   useEffect(() => {
     dispatch(fetchCustomerAsync());
   }, [dispatch]);
+console.log(cartItems,'cartItems');
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -49,8 +54,24 @@ const PrintInvoice = ({
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const handlePrint = () => {
-    window.print();
+  const handlePrint = async() => {
+    try {
+      // API call to notify successful print
+      const response = await fetch(`${API_URLS}/orders/invoices/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ order_id:invoiceNumber }),
+      });
+      setMessage(true)
+      // Show success message
+
+      // Trigger the browser's print dialog
+      // window.print();
+    } catch (error) {
+      // Handle API call errors
+      console.error("Error while printing the invoice:", error);
+  };
+    // window.print();
   };
 
   const formatDate = (date: Date): string => {
@@ -273,6 +294,11 @@ const PrintInvoice = ({
               </button>
             </div>
           </div>
+        </div>
+      )}
+         {message && (
+        <div className="fixed bottom-4 right-4 bg-green-500 text-white text-sm font-semibold py-2 px-4 rounded shadow-lg">
+          {'Invoice generated successfully'}
         </div>
       )}
     </>

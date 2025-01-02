@@ -9,6 +9,7 @@ import {
   fetchCustomerId,
 } from "../../../api/reservation-api";
 import axios from "axios";
+import { API_URLS } from "@/utils/api-urls";
 
 interface CartItem {
   id: number;
@@ -35,7 +36,7 @@ const CartModal: React.FC<CartModalProps> = ({
     {}
   );
   const [checkoutTriggered, setCheckoutTriggered] = useState(false);
-
+const [invoiceNumber,setInvoiceNumber] = useState()
   const [userData, setUserData] = useState({
     name: "",
     phone: "",
@@ -87,9 +88,11 @@ const CartModal: React.FC<CartModalProps> = ({
 const handleCheckout = async () => {
   try {
     const response = await axios.post(
-      "https://d44a-119-157-163-247.ngrok-free.app/customers/create_customer/",
+      `${API_URLS}/customers/create_customer/`,
       userData
     );
+    
+
     setCheckoutTriggered((prev) => !prev);
   } catch (error) {
     console.error("Error during checkout:", error);
@@ -144,7 +147,7 @@ useEffect(() => {
 
     try {
       const response = await axios.post(
-        "https://d44a-119-157-163-247.ngrok-free.app/orders/orders/",
+        `${API_URLS}/orders/orders/`,
         payload,
         {
           headers: {
@@ -152,10 +155,15 @@ useEffect(() => {
           },
         }
       );
+    console.log(response,'response');
+if(response.data.data){
+  setInvoiceNumber(response.data.data.id)
+}
     } catch (error) {
       console.error("Error submitting order:", error);
     }
   };
+console.log(cartItems,'cartItems');
 
   return (
     <div>
@@ -421,9 +429,10 @@ useEffect(() => {
                         <PrintInvoice
                           invoiceId={invoiceId}
                           customerData={userData}
-                          cartItems={cartItems}
+                          cartItems={selectedItem}
                           calculateTotal={calculateTotal}
                           total={total}
+                          invoiceNumber={invoiceNumber}
                         />
                       </div>
                     </div>

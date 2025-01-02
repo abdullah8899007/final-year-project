@@ -10,7 +10,6 @@ const EarningCategories: React.FC<EarningCategoriesProps> = ({ className = '' })
   const classNames = `rounded-lg shadow-lg bg-white earning-categories-graph ${className}`;
     const [userData, setUserData] = useState<any[]>([]);
   
-    console.log("userData",userData)
 const getData = async () => {
     try {
       const response = await fetchCategoryApi();

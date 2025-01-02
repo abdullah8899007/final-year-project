@@ -185,7 +185,7 @@ const TopHeader = () => {
                   )}
                 </div>
                 <p className="text-[14px] md:text-base">
-                  Jhon Doe <br />
+                  {/* Jhon Doe <br /> */}
                   <span className="text-[#ea6a12] font-bold">Admin</span>
                 </p>
               </div>

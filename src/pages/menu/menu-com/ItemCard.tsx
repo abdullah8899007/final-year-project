@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import { fetchAllItems } from "../../../api/salesreport-api";
+import { fetchAllItems, deleteItem } from "../../../api/salesreport-api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const SelectedItem = ({ item }: { item: any }) => {
   return (
@@ -60,6 +62,20 @@ const ItemCard = ({
     });
   };
 
+  const handleDeleteItem = async (itemId: number) => {
+    try {
+      const response = await deleteItem(itemId);
+      if (response?.success) {
+        setData((prevData) => prevData.filter((item) => item.id !== itemId));
+        console.log("Item deleted successfully");
+      } else {
+        console.error("Failed to delete item:", response);
+      }
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
+  };
+
   const isItemSelected = (item: any) =>
     selectedItem.some((selected) => selected.id === item.id);
 
@@ -83,10 +99,10 @@ const ItemCard = ({
               padding: "16px",
               width: "250px",
               boxShadow: isItemSelected(item)
-                ? "0 8px 16px rgba(0, 128, 0, 0.3)" // Highlight selected items
+                ? "0 8px 16px rgba(0, 128, 0, 0.3)"
                 : "0 4px 6px rgba(0, 0, 0, 0.1)",
               cursor: "pointer",
-              backgroundColor: isItemSelected(item) ? "#f0fff4" : "white", // Light green for selected items
+              backgroundColor: isItemSelected(item) ? "#f0fff4" : "white",
               transition: "all 0.3s ease-in-out",
             }}
             onMouseEnter={(e) => {
@@ -121,6 +137,19 @@ const ItemCard = ({
             <p>
               <strong>Stock:</strong> {item.stock}
             </p>
+            <FontAwesomeIcon
+              icon={faTrash}
+              style={{
+                marginTop: "10px",
+                color: "#ff4d4f",
+                fontSize: "20px",
+                cursor: "pointer",
+              }}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering item selection on delete
+                handleDeleteItem(item.id);
+              }}
+            />
           </div>
         ))}
       </div>
