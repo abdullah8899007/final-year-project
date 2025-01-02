@@ -18,9 +18,9 @@ export default function PaymentHistoryTable() {
                             <td className='px-3'>{user.date}</td>
                             <td className='px-3'>{user.email}</td>
                             <td className='px-3'>{user.id}</td>
-                            <td className='px-3'>
+                            {/* <td className='px-3'>
                                 <button type="button" className="text-white bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-pink-400 dark:focus:outline-none dark:focus:ring-blue-800">Pending</button>
-                            </td>
+                            </td> */}
                         </tr>
                     ))}
                 </tbody>

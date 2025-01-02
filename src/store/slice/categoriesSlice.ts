@@ -49,7 +49,7 @@ export const createCategoryAsync = createAsyncThunk<CategoryItems, CategoryItems
     async (newCategory, thunkAPI) => {
         try {
             // Replace with your actual API call
-            const response = await fetch("/api/categories", {
+            const response = await fetch("/menu/categories/", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newCategory),

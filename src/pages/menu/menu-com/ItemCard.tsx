@@ -55,11 +55,13 @@ const ItemCard = ({
 
   const handleSelectItem = (item: any) => {
     setSelectedItem((prevSelectedItems) => {
-      // Ensure prevSelectedItems is an array before spreading
       const items = Array.isArray(prevSelectedItems) ? prevSelectedItems : [];
       return [...items, item];
     });
   };
+
+  const isItemSelected = (item: any) =>
+    selectedItem.some((selected) => selected.id === item.id);
 
   return (
     <div>
@@ -80,8 +82,22 @@ const ItemCard = ({
               borderRadius: "8px",
               padding: "16px",
               width: "250px",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              boxShadow: isItemSelected(item)
+                ? "0 8px 16px rgba(0, 128, 0, 0.3)" // Highlight selected items
+                : "0 4px 6px rgba(0, 0, 0, 0.1)",
               cursor: "pointer",
+              backgroundColor: isItemSelected(item) ? "#f0fff4" : "white", // Light green for selected items
+              transition: "all 0.3s ease-in-out",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "scale(1.05)";
+              e.currentTarget.style.boxShadow = "0 8px 12px rgba(0, 0, 0, 0.2)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.boxShadow = isItemSelected(item)
+                ? "0 8px 16px rgba(0, 128, 0, 0.3)"
+                : "0 4px 6px rgba(0, 0, 0, 0.1)";
             }}
           >
             <div

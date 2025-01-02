@@ -51,3 +51,21 @@ export const fetchCategoryApi  = async () => {
     throw new Error('Failed to fetch reservations');
   }
 };
+
+export const SendCustomerData = async (newReservation: Omit<Reservation, 'id'>) :Promise <Reservation>=> {
+  try {
+    const response = await axios.post (API_URLS +'/customers/create_customer/', newReservation,axiosConfig);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to create reservation');
+  }
+};
+
+export const fetchCustomerId  = async () => {
+  try {
+    const response = await axios.get(API_URLS +'/customers/create_customer/latest/',axiosConfig);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch reservations');
+  }
+};

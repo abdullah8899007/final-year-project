@@ -36,7 +36,7 @@ const TopHeader = () => {
               <form className="hidden lg:block lg:pl-2">
                 <label className="sr-only">Search</label>
 
-                <div className="relative mt-1 lg:w-96 ml-24">
+                {/* <div className="relative mt-1 lg:w-96 ml-24">
                   <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                     <FaSearch className="w-4 h-4 text-gray-500 dark:text-gray-400" />
                   </div>
@@ -46,7 +46,7 @@ const TopHeader = () => {
                     className="block pl-10 pr-10 text-sm bg-white h-[30px] md:w-[250px] w-full outline-none p-5 placeholder:text-[18px] font-normal shadow-sm rounded-full border border-gray-300"
                     placeholder="Search..."
                   />
-                </div>
+                </div> */}
               </form>
             </div>
             {/* Right side */}
@@ -58,11 +58,11 @@ const TopHeader = () => {
                 }`}
                 onClick={() => toggleDropdown("bellIcon")}
               >
-                <Image
+                {/* <Image
                   src={bellIcon}
                   alt="logo"
                   className="w-[20px] h-[20px] cursor-pointer"
-                />
+                /> */}
                 {isSubMenuOpen.bellIcon && (
                   <div className="absolute z-10 right-0 top-full bg-white border rounded-md  shadow-lg">
                     <div className=" min-w-full rounded-lg w-[410px] max-h-[500px] overflow-auto">
@@ -107,7 +107,7 @@ const TopHeader = () => {
                 }`}
                 onClick={() => toggleDropdown("msg")}
               >
-                <Image src={msg} alt="logo" className="w-[20px] h-[20px]" />
+                {/* <Image src={msg} alt="logo" className="w-[20px] h-[20px]" /> */}
                 {isSubMenuOpen.msg && (
                   <div className="absolute z-10 right-0 top-full bg-white border rounded-md  shadow-lg">
                     <div className=" min-w-full rounded-lg w-[410px] max-h-[500px] overflow-auto">
@@ -158,7 +158,7 @@ const TopHeader = () => {
                         className="py-2 text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="avatarButton"
                       >
-                        <li>
+                        {/* <li>
                           <Link
                             href="../Profile"
                             className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -168,7 +168,7 @@ const TopHeader = () => {
                               Profile
                             </span>
                           </Link>
-                        </li>
+                        </li> */}
                         <li>
                           <Link
                             href="/"

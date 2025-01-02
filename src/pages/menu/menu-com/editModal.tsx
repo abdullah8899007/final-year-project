@@ -47,7 +47,6 @@ const EditModal: React.FC<EditModalProps> = ({ id, initialData }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("update", formData);
     dispatch(updateMenuItemAsync(formData));
     closeModal();
   };
@@ -58,7 +57,6 @@ const EditModal: React.FC<EditModalProps> = ({ id, initialData }) => {
 
   useEffect(() => {
     if (isModalOpen) {
-      console.log("Item image URL:", formData.image);
     }
   }, [formData.image, isModalOpen]);
 

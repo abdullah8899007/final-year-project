@@ -10,12 +10,12 @@ const Index = () => {
      <div className="w-full">
         <h1 className='pt-4 pys-2 font-bold' >Wallet/Payment Gateway</h1>
         <div className="main-balance-container justify-around flex"  >
-          <div  className="w-2/3">
+          {/* <div  className="w-2/3">
             <WalletProgress />
-          </div>
-          <div className="w-1/4">
+          </div> */}
+          {/* <div className="w-1/4">
             <WalletBalance />   
-          </div>
+          </div> */}
         </div>
         <div className="main-balance-container justify-around flex"  >
           <div >

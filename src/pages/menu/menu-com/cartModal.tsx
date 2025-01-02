@@ -1,13 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import PrintInvoice from "@/pages/menu/menu-com/printInvoice";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/store/root-store";
-import { removeFromCart, updateQuantity } from "@/store/slice/cartSlice";
 import { MdDelete } from "react-icons/md";
-import { createOrderAsync } from "@/store/slice/orderSlice";
-import { createCustomerAsync, Customer } from "@/store/slice/customerSlice";
 import { RxCross2 } from "react-icons/rx";
-import { createInvoiceAsync, Invoice } from "@/store/slice/invoiceSlice";
+import {
+  SendCustomerData,
+  fetchCustomerId,
+} from "../../../api/reservation-api";
+import axios from "axios";
+
 interface CartItem {
   id: number;
   name: string;
@@ -32,15 +34,27 @@ const CartModal: React.FC<CartModalProps> = ({
   const [itemQuantities, setItemQuantities] = useState<Record<string, number>>(
     {}
   );
+  const [checkoutTriggered, setCheckoutTriggered] = useState(false);
 
   const [userData, setUserData] = useState({
     name: "",
     phone: "",
     address: "",
     email: "",
-    orderType: "",
   });
   const [orderId, setOrderId] = useState<number>(0);
+  const [customerData, setCustomerData] = useState<any[]>([]);
+
+  const getData = async () => {
+    try {
+      const response = await fetchCustomerId();
+      setCustomerData(response);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const customerId = customerData?.data?.id;
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -55,37 +69,46 @@ const CartModal: React.FC<CartModalProps> = ({
     >
   ) => {
     const { name, value } = e.target;
-    if (name === "orderType") {
-      setUserData((prevData) => ({
-        ...prevData,
-        orderType: value,
-      }));
-    } else {
-      setUserData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
-  console.log("selectedItem>>>>>>>>>>>>>>>>>>>>>>>>.", selectedItem);
+
   const calculateTotal = () => {
-    return cartItems.reduce(
-      (totalPrice, item) => totalPrice + item.stock * item.price,
+    return selectedItem.reduce(
+      (totalPrice, item) =>
+        totalPrice + item.price * (itemQuantities[item.id] || 1),
       0
     );
   };
-  //   setItemQuantities((prevQuantities) => {
-  //     const { [id]: _, ...remainingQuantities } = prevQuantities;
-  //     return remainingQuantities;
-  //   });
-  // };
+  const OrderQuantity = selectedItem.quantity;
+  const OrderId = selectedItem[0]?.id;
+const handleCheckout = async () => {
+  try {
+    const response = await axios.post(
+      "https://d44a-119-157-163-247.ngrok-free.app/customers/create_customer/",
+      userData
+    );
+    setCheckoutTriggered((prev) => !prev);
+  } catch (error) {
+    console.error("Error during checkout:", error);
+  }
+};
 
-  const handleUpdateQuantity = (id: any, newQuantity: number) => {
-    // Update the quantity for the specific item
-    setItemQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [id]: newQuantity,
-    }));
+useEffect(() => {
+  getData();
+}, [checkoutTriggered]);
+
+  const handleUpdateQuantity = (id: number, newQuantity: number) => {
+    setCheckoutTriggered((prev) => !prev); 
+
+    if (newQuantity > 0) {
+      setItemQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        [id]: newQuantity,
+      }));
+    }
   };
   const handleDelete = (id: any) => {
     setSelectedItem((prevItems: any[]) =>
@@ -94,65 +117,6 @@ const CartModal: React.FC<CartModalProps> = ({
   };
 
   const CartItem = useSelector((state: RootState) => state.cart.items);
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-
-    // Create a new customer object
-    const newCustomer = {
-      name: userData.name,
-      phone: userData.phone,
-      address: userData.address,
-      email: userData.email,
-    };
-
-    // Dispatch action to create the customer
-    dispatch(createCustomerAsync(newCustomer))
-      .then((customerAction: any) => {
-        const customerId = customerAction.payload.id;
-        if (!userData.orderType) {
-          alert("Please select an order type.");
-          return;
-        }
-
-        const orderItems = cartItems.map((item) => ({
-          itemId: item.id,
-          stock: item.stock,
-        }));
-
-        const order = {
-          customerId: customerId,
-          items: orderItems,
-          orderType: userData.orderType,
-          total: calculateTotal(),
-          status: "Enqueue",
-        };
-        dispatch(createOrderAsync(order)).then((orderAction: any) => {
-          const orderId = orderAction.payload.data.id;
-
-          const newInvoice: Omit<Invoice, "invoice_id" | "issued_at"> = {
-            orderId: orderId,
-            customer: customerId,
-            items: cartItems.map((item) => ({
-              itemId: item.id,
-              stock: item.stock,
-              price: item.price,
-              status: "pending",
-            })),
-          };
-
-          dispatch(createInvoiceAsync(newInvoice)).then((orderAction: any) => {
-            const invoiceId = orderAction.payload.invoice_id;
-            console.log("invice id", invoiceId);
-            setInvoiceId(invoiceId);
-          });
-        });
-      })
-      .catch((error: any) => {
-        console.error("Error creating customer:", error);
-      });
-  };
-
-  // Caculate the dicount or total jo upper sa get kiya hai
   const subtotal = calculateTotal();
   const total =
     discount > 0 ? subtotal - (subtotal * discount) / 100 : subtotal;
@@ -163,6 +127,33 @@ const CartModal: React.FC<CartModalProps> = ({
       setDiscount(newDiscount);
     } else {
       setDiscount(0);
+    }
+  };
+  const handleSubmit = async () => {
+    const updatedItems = selectedItem.map((item: any) => ({
+      itemid: item.id,
+      quantity: itemQuantities[item.id] || 1,
+    }));
+
+    const payload = {
+      customerId: customerId,
+      items: updatedItems,
+      orderType: "Lunch",
+      total: total,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://d44a-119-157-163-247.ngrok-free.app/orders/orders/",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error submitting order:", error);
     }
   };
 
@@ -377,7 +368,7 @@ const CartModal: React.FC<CartModalProps> = ({
                                   <td>
                                     <MdDelete
                                       className="text-2xl cursor-pointer shrink-0 fill-[#ea6a12] hover:fill-red-500"
-                                      onClick={() => handleDelete(item.id)} // Pass item id to handleDelete
+                                      onClick={() => handleDelete(item.id)}
                                     />
                                   </td>
                                 </tr>
@@ -415,10 +406,18 @@ const CartModal: React.FC<CartModalProps> = ({
                         <button
                           type="submit"
                           className="bg-[#ea6a12] text-white py-2 px-4 rounded-lg mt-4 w-full"
-                          onClick={handleSubmit}
+                          onClick={handleCheckout}
                         >
                           Checkout
                         </button>
+                        <button
+                          type="submit"
+                          className="bg-[#ea6a12] text-white py-2 px-4 rounded-lg mt-4 w-full"
+                          onClick={handleSubmit}
+                        >
+                          Confirm-Order
+                        </button>
+
                         <PrintInvoice
                           invoiceId={invoiceId}
                           customerData={userData}

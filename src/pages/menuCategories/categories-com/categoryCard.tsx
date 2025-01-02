@@ -20,7 +20,6 @@ const CategoryCard = () => {
   useEffect(() => {
     getData();
   }, []);
-console.log("mainBalance",mainBalance)
   return (
     <div
       style={{

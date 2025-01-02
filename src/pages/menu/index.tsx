@@ -9,7 +9,6 @@ import CartModal from "./menu-com/cartModal";
 const Menuitem: React.FC = () => {
   const [data, setData] = useState<any[]>([]);
   const [selectedItem, setSelectedItem] = useState<any>([]);
-  console.log("selectedItem", selectedItem);
 
   return (
     <Layout>

@@ -74,14 +74,14 @@ const Sidebar: React.FC = () => {
                <span className="ms-3 hover:text-[#8c5936] text-[#777777]  ">Categories</span>
             </Link>
          </li>
-         <li className={activeItem === 'deals' ? 'bg-[#f7c3a0] rounded-lg' : ''} >
+         {/* <li className={activeItem === 'deals' ? 'bg-[#f7c3a0] rounded-lg' : ''} >
             <Link href="../deals" className="flex items-center p-2 
             hover:text-[#8c5936] text-black  rounded-lg dark:text-white hover:bg-[#f7c3a0] group"
             onClick={() => handleItemClick('deals')}>
              <Image src={dealIcon} alt='deals'/>
                <span className="ms-3 hover:text-[#8c5936] text-[#777777]  ">Deals</span>
             </Link>
-         </li>
+         </li> */}
          <li className={activeItem === 'order' ? 'bg-[#f7c3a0] rounded-lg' : ''} >
             <Link href="../order" className="flex items-center p-2 
            hover:text-[#8c5936] text-black  rounded-lg dark:text-white hover:bg-[#f7c3a0] group"
@@ -104,10 +104,10 @@ const Sidebar: React.FC = () => {
             hover:text-[#8c5936] text-black  rounded-lg dark:text-white hover:bg-[#f7c3a0] group"
             onClick={() => handleItemClick('wallet')} >
                <Image src={walletIcon} alt='wallet'/>
-               <span className="ms-3 hover:text-[#8c5936] text-[#777777]">Wallet</span>
+               <span className="ms-3 hover:text-[#8c5936] text-[#777777]">History</span>
             </Link>
          </li>
-         <li className={activeItem === 'customer' ? 'bg-[#f7c3a0] rounded-lg' : ''} >
+         {/* <li className={activeItem === 'customer' ? 'bg-[#f7c3a0] rounded-lg' : ''} >
             <Link href="../customer" className="flex items-center p-2 
              hover:text-[#8c5936] text-black  rounded-lg dark:text-white hover:bg-[#f7c3a0] group"
              onClick={() => handleItemClick('customer')}>
@@ -130,7 +130,7 @@ const Sidebar: React.FC = () => {
                <Image src={resevIcon} alt='reservation'/>
                <span className="ms-3 hover:text-[#8c5936] text-[#777777] ">Reservation</span>
             </Link>
-         </li>
+         </li> */}
       </ul>
    </div>
 </aside>
