@@ -10,6 +10,7 @@ import {
 } from "../../../api/reservation-api";
 import axios from "axios";
 import { API_URLS } from "@/utils/api-urls";
+import toast, { Toaster } from "react-hot-toast";
 
 interface CartItem {
   id: number;
@@ -36,7 +37,7 @@ const CartModal: React.FC<CartModalProps> = ({
     {}
   );
   const [checkoutTriggered, setCheckoutTriggered] = useState(false);
-const [invoiceNumber,setInvoiceNumber] = useState()
+  const [invoiceNumber, setInvoiceNumber] = useState();
   const [userData, setUserData] = useState({
     name: "",
     phone: "",
@@ -85,26 +86,26 @@ const [invoiceNumber,setInvoiceNumber] = useState()
   };
   const OrderQuantity = selectedItem.quantity;
   const OrderId = selectedItem[0]?.id;
-const handleCheckout = async () => {
-  try {
-    const response = await axios.post(
-      `${API_URLS}/customers/create_customer/`,
-      userData
-    );
-    
+  const handleCheckout = async () => {
+    try {
+      const response = await axios.post(
+        `${API_URLS}/customers/create_customer/`,
+        userData
+      );
 
-    setCheckoutTriggered((prev) => !prev);
-  } catch (error) {
-    console.error("Error during checkout:", error);
-  }
-};
+      setCheckoutTriggered((prev) => !prev);
+      toast.success("Checkout Successfully");
+    } catch (error) {
+      console.error("Error during checkout:", error);
+    }
+  };
 
-useEffect(() => {
-  getData();
-}, [checkoutTriggered]);
+  useEffect(() => {
+    getData();
+  }, [checkoutTriggered]);
 
   const handleUpdateQuantity = (id: number, newQuantity: number) => {
-    setCheckoutTriggered((prev) => !prev); 
+    setCheckoutTriggered((prev) => !prev);
 
     if (newQuantity > 0) {
       setItemQuantities((prevQuantities) => ({
@@ -146,24 +147,24 @@ useEffect(() => {
     };
 
     try {
-      const response = await axios.post(
-        `${API_URLS}/orders/orders/`,
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-    console.log(response,'response');
-if(response.data.data){
-  setInvoiceNumber(response.data.data.id)
-}
+      const response = await axios.post(`${API_URLS}/orders/orders/`, payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response, "response");
+      toast.success("Order done Successfully");
+
+      if (response.data.data) {
+        setInvoiceNumber(response.data.data.id);
+      }
     } catch (error) {
+      toast.error("something went wrong");
+
       console.error("Error submitting order:", error);
     }
   };
-console.log(cartItems,'cartItems');
+  console.log(cartItems, "cartItems");
 
   return (
     <div>
@@ -445,6 +446,7 @@ console.log(cartItems,'cartItems');
           </div>
         </div>
       )}
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 };

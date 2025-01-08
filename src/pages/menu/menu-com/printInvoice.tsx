@@ -9,6 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 import { createInvoiceAsync, Invoice } from "@/store/slice/invoiceSlice";
 import axios from "axios";
 import { API_URLS } from "@/utils/api-urls";
+import toast, { Toaster } from "react-hot-toast";
 interface CartItem {
   id: number;
   name: string;
@@ -42,7 +43,7 @@ const PrintInvoice = ({
   const dispatch: AppDispatch = useDispatch();
   const currentDateRef = useRef<string>("");
   const SelectOrder = useSelector((state: RootState) => state.order.orders);
-  const [message,setMessage] = useState(false)
+
   useEffect(() => {
     dispatch(fetchCustomerAsync());
   }, [dispatch]);
@@ -62,13 +63,16 @@ console.log(cartItems,'cartItems');
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ order_id:invoiceNumber }),
       });
-      setMessage(true)
+
+toast.success('Invoice generated successfully')
       // Show success message
 
       // Trigger the browser's print dialog
       // window.print();
     } catch (error) {
-      // Handle API call errors
+      // Handle API call errors\
+toast.error('Something went wrong')
+
       console.error("Error while printing the invoice:", error);
   };
     // window.print();
@@ -139,16 +143,7 @@ console.log(cartItems,'cartItems');
                     {invoiceId}
                   </span>
 
-                  <address className="mt-4 not-italic text-gray-800 dark:text-gray-200">
-                    45 Roker Terrace
-                    <br />
-                    Latheronwheel
-                    <br />
-                    KW5 8NW, London
-                    <br />
-                    United Kingdom
-                    <br />
-                  </address>
+                 
                 </div>
               </div>
 
@@ -220,25 +215,25 @@ console.log(cartItems,'cartItems');
                           <div className="col-span-full sm:col-span-2 mr-3">
                             <h5 className="sm:hidden text-xs font-medium  uppercase text-red-500"></h5>
 
-                            <p className="font-medium text-gray-800 dark:text-gray-200">
+                            <p className="font-medium text-gray dark:text-gray">
                               {item.name}
                             </p>
                           </div>
                           <div>
                             <h5 className="sm:hidden text-xs font-medium text-gray-500 uppercase"></h5>
-                            <p className="text-gray-800 dark:text-gray-200">
+                            <p className="text-gray-800 dark:text-gray">
                               {" "}
                               {item.stock}
                             </p>
                           </div>
                           <div>
-                            <p className="text-gray-800 dark:text-gray-200">
+                            <p className="text-gray dark:text-gray">
                               {" "}
                               {item.price}
                             </p>
                           </div>
                           <div>
-                            <p className=" text-gray-800 dark:text-gray-200">
+                            <p className=" text-gray dark:text-gray">
                               {item.price * item.stock}
                             </p>
                           </div>
@@ -253,17 +248,17 @@ console.log(cartItems,'cartItems');
                 <div className="w-full max-w-2xl sm:text-end space-y-2">
                   <div className="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
                     <dl className="grid sm:grid-cols-5 gap-x-3">
-                      <dt className="col-span-3 font-semibold text-gray-800 dark:text-gray-200">
+                      <dt className="col-span-3 font-semibold text-gray dark:text-gray">
                         Subtotal:
                       </dt>
-                      <dd className=" text-gray-500">{total}</dd>
+                      <dd className=" text-gray">{total}</dd>
                     </dl>
                   </div>
                 </div>
               </div>
 
               <div className="mt-8 sm:mt-12">
-                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray">
                   Thank you!
                 </h4>
                 <p className="text-gray-500">
@@ -289,6 +284,7 @@ console.log(cartItems,'cartItems');
                   handlePrint();
                   closeModal();
                 }}
+                disabled={!!customerData?.name}
               >
                 <FaPrint className="mr-2" /> Print Invoice
               </button>
@@ -296,11 +292,10 @@ console.log(cartItems,'cartItems');
           </div>
         </div>
       )}
-         {message && (
-        <div className="fixed bottom-4 right-4 bg-green-500 text-white text-sm font-semibold py-2 px-4 rounded shadow-lg">
-          {'Invoice generated successfully'}
-        </div>
-      )}
+       <Toaster
+      position="top-right"
+      reverseOrder={false}
+      />
     </>
   );
 };

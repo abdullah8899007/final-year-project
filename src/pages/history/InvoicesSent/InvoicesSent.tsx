@@ -6,6 +6,9 @@ import InvoiceBtn from "../InvoiceBtn";
 
 const InvoicesSent = () => {
   const [invoices, setInvoices] = useState<any[]>([]);
+  const [visibleInvoices, setVisibleInvoices] = useState<any[]>([]); // To control visible invoices
+  const [isAllLoaded, setIsAllLoaded] = useState<boolean>(false); // To track if all invoices are loaded
+  const [invoicesPerPage] = useState(2); // Number of invoices to load at a time
 
   const fetchInvoices = async () => {
     try {
@@ -27,12 +30,24 @@ const InvoicesSent = () => {
     fetchInvoices();
   }, []);
 
+  useEffect(() => {
+    setVisibleInvoices(invoices.slice(0, invoicesPerPage));
+    setIsAllLoaded(invoices.length <= invoicesPerPage); // If the length of invoices is less than or equal to invoicesPerPage, then it's all loaded
+  }, [invoices]);
+
+  const loadMoreInvoices = () => {
+    const currentLength = visibleInvoices.length;
+    const nextInvoices = invoices.slice(currentLength, currentLength + invoicesPerPage);
+    setVisibleInvoices((prev) => [...prev, ...nextInvoices]);
+    setIsAllLoaded(invoices.length <= currentLength + nextInvoices.length);
+  };
+
   return (
     <div className="p-4 bg-white rounded-lg">
       <h1 className="font-bold">Invoices Sent</h1>
       <table className="w-full">
         <tbody>
-          {invoices.map((invoice) => (
+          {visibleInvoices.map((invoice) => (
             <tr key={invoice.invoice_id}>
               <td>
                 <Image
@@ -50,8 +65,9 @@ const InvoicesSent = () => {
           ))}
         </tbody>
       </table>
+
       <div className="invoice-btn-container">
-        <InvoiceBtn />
+        <InvoiceBtn onViewMore={loadMoreInvoices} />
       </div>
     </div>
   );

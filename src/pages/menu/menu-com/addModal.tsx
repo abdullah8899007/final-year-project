@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCategories } from "../../../api/salesreport-api";
 import axios from "axios";
 import { API_URLS } from "@/utils/api-urls";
+import { toast, Toaster } from 'react-hot-toast';
+ 
 
 const AddModal: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -91,7 +93,9 @@ const AddModal: React.FC = () => {
           image: "ccc",
         });
         closeModal();
+        toast.success('Item added succefully!');
       } else {
+        toast.error('something went wrong!');
         console.error("Unexpected response:", response);
       }
     } catch (error) {
@@ -253,6 +257,10 @@ const AddModal: React.FC = () => {
           </div>
         </div>
       )}
+      <Toaster
+position="top-right"
+reverseOrder={false}
+/>
     </div>
   );
 };

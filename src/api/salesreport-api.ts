@@ -90,6 +90,13 @@ interface Customer {
 
 }
 
+interface History {
+  customer__name: string
+  total: number
+  orderType: string
+  status: string
+  created_at: string
+}
 export const fetchUserData = async (): Promise<number[]> => {
   try {
     const response = await axios.get<Customer>(
@@ -224,5 +231,26 @@ export const deleteItem = async (itemId: number) => {
   } catch (error) {
     console.error("Error in deleteItem:", error);
     return null;
+  }
+};
+
+export const fetchHistoryData = async (): Promise<any[]> => {
+  try {
+    const response:any = await axios.get<History>(
+      `${API_URLS}/sales/payment-history/`,
+      {
+        headers: {
+          'ngrok-skip-browser-warning': 'true',
+        },
+      }
+    );
+    return response?.data?.data; 
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error('Error fetching monthly sales:', error.response?.data || error.message);
+    } else {
+      console.error('Unexpected error:', error);
+    }
+    throw new Error('Failed to fetch monthly sales');
   }
 };

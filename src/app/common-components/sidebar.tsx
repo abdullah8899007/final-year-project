@@ -99,11 +99,11 @@ const Sidebar: React.FC = () => {
                <span className="ms-3 hover:text-[#8c5936] text-[#777777]">Invoice</span>
             </Link>
          </li>
-         <li className={activeItem === 'wallet' ? 'bg-[#f7c3a0] rounded-lg' : ''} >
-            <Link href="../wallet" className="flex items-center p-2 
+         <li className={activeItem === 'history' ? 'bg-[#f7c3a0] rounded-lg' : ''} >
+            <Link href="../history" className="flex items-center p-2 
             hover:text-[#8c5936] text-black  rounded-lg dark:text-white hover:bg-[#f7c3a0] group"
-            onClick={() => handleItemClick('wallet')} >
-               <Image src={walletIcon} alt='wallet'/>
+            onClick={() => handleItemClick('history')} >
+               <Image src={walletIcon} alt='history'/>
                <span className="ms-3 hover:text-[#8c5936] text-[#777777]">History</span>
             </Link>
          </li>

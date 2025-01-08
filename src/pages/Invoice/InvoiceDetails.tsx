@@ -186,7 +186,7 @@ const InvoiceDetails: React.FC<InvoiceDetailProps> = ({
                   <div className="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
                     <dl className="grid sm:grid-cols-4 gap-x-3">
                       <dt className="col-span-2 font-semibold text-gray-800 dark:text-gray-200 float-right">
-                        Subtotal:
+                        {/* Subtotal: */}
                       </dt>
                       <dd className="col-span-1 text-gray-500">
                         {" "}

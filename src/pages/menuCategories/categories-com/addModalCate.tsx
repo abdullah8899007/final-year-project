@@ -119,6 +119,8 @@ import { RxCross2 } from "react-icons/rx";
 import { createCategoryAsync } from "@/store/slice/categoriesSlice";
 import axios from "axios"; // Import axios
 import { API_URLS } from "@/utils/api-urls";
+import { toast, Toaster } from 'react-hot-toast';
+ 
 
 const AddModal = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -162,6 +164,7 @@ const AddModal = () => {
         },
       });
       console.log("Category created:", response.data);
+      toast.success('Category added succefully')
       dispatch(createCategoryAsync(response.data));
     } catch (error) {
       console.error("Error creating category:", error);
@@ -243,6 +246,10 @@ const AddModal = () => {
           </div>
         </div>
       )}
+            <Toaster
+      position="top-right"
+      reverseOrder={false}
+      />
     </>
   );
 };

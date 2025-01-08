@@ -8,7 +8,7 @@ const Index = () => {
   return (
     <Layout>
      <div className="w-full">
-        <h1 className='pt-4 pys-2 font-bold' >Wallet/Payment Gateway</h1>
+        <h1 className='pt-4 pys-2 font-bold' >History/Payment Gateway</h1>
         <div className="main-balance-container justify-around flex"  >
           {/* <div  className="w-2/3">
             <WalletProgress />
@@ -17,7 +17,7 @@ const Index = () => {
             <WalletBalance />   
           </div> */}
         </div>
-        <div className="main-balance-container justify-around flex"  >
+        <div className="main-balance-container justify-between flex"  >
           <div >
             <PaymentHistory />
           </div>
